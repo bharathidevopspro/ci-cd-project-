@@ -16,7 +16,7 @@ resource "aws_launch_template" "lt" {
   instance_type = var.instance_type
 
   network_interfaces {
-    associate_public_ip_address = false
+    associate_public_ip_address = true
     security_groups             = [aws_security_group.ec2_sg.id]
   }
 }
@@ -27,7 +27,7 @@ resource "aws_autoscaling_group" "asg" {
   max_size         = 3
   min_size         = 1
 
-  vpc_zone_identifier = var.private_subnets
+  vpc_zone_identifier = var.public_subnets
 
   launch_template {
     id      = aws_launch_template.lt.id
