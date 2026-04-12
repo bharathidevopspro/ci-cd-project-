@@ -15,8 +15,7 @@ resource "aws_launch_template" "lt" {
   image_id      = var.ami_id
   instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
-  associate_public_ip_address = true
-  }
+   }
 
 
 resource "aws_autoscaling_group" "asg" {
