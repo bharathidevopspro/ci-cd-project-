@@ -1,0 +1,5 @@
+- hosts: tag_Name_ansible-server
+  become: yes
+
+  roles:
+    - web

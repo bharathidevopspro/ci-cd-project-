@@ -1,0 +1,35 @@
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install nginx and git
+  apt:
+    name:
+      - nginx
+      - git
+    state: present
+
+- name: Ensure web root exists
+  file:
+    path: "{{ web_root }}"
+    state: directory
+    mode: '0755'
+
+- name: Clean old files
+  shell: rm -rf {{ web_root }}/*
+  args:
+    warn: false
+
+- name: Clone repo
+  git:
+    repo: "{{ repo_url }}"
+    dest: "{{ dest_path }}"
+    version: main
+    force: yes
+
+- name: Copy website files
+  copy:
+    src: "{{ dest_path }}/website/"
+    dest: "{{ web_root }}/"
+    remote_src: yes
+  notify: restart nginx

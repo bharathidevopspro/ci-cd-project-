@@ -1,0 +1,3 @@
+repo_url: "https://github.com/bharathidevopspro/ci-cd-project-.git"
+dest_path: "/tmp/game"
+web_root: "/var/www/html"
