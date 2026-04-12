@@ -9,7 +9,7 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                 git branch: 'main', url: 'https://github.com/bharathidevopspro/ci-cd-project-.git''
+                 git branch: 'main', url: 'https://github.com/bharathidevopspro/ci-cd-project-.git'
             }
         }
 
