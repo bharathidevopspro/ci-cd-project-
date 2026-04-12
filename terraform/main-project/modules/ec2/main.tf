@@ -1,6 +1,6 @@
 resource "aws_security_group" "ec2_sg" {
   name   = "ec2-sg"
-  vpc_id = var.vpc_id
+  vpc_id = module.var.vpc_id
 
   ingress {
     from_port       = 80
