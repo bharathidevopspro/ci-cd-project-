@@ -35,5 +35,10 @@ resource "aws_autoscaling_group" "asg" {
   }
 
   target_group_arns = [var.target_group_arn]
+  tag {
+    key                 = "Name"
+    value               = "ansible-server"
+    propagate_at_launch = true
+  }
 }
 
