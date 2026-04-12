@@ -10,9 +10,10 @@ module "alb" {
 }
 
 module "ec2" {
-  source           = "./modules/ec2"
+  source           = "./modules/ec2"  
   vpc_id           = module.vpc.vpc_id
   private_subnets  = module.vpc.private_subnets
+  public_subnets = var.public_subnets
   instance_type    = var.instance_type
   ami_id           = var.ami_id
   target_group_arn = module.alb.target_group_arn
