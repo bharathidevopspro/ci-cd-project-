@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "tf_state" {
-  bucket = "bharathi-terraform-state-001"
+  bucket = "bharathi-bucket-3362"
 }
 
 resource "aws_s3_bucket_versioning" "versioning" {
