@@ -4,4 +4,5 @@ variable "instance_type" {}
 variable "ami_id" {}
 variable "target_group_arn" {}
 variable "alb_sg_id" {}
+variable "instance_profile_name" {}
 
