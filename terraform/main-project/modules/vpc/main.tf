@@ -63,31 +63,31 @@ resource "aws_route_table" "public" {
   }
 }
 resource "aws_vpc_endpoint" "ssm" {
-  vpc_id            = var.vpc_id
+  vpc_id            = aws_vpc.main.id
   service_name      = "com.amazonaws.ap-south-1.ssm"
   vpc_endpoint_type = "Interface"
-  subnet_ids        = var.private_subnets
-  security_group_ids = [aws_security_group.ec2_sg.id]
+  subnet_ids        = aws_subnet.private[*].id
+  security_group_ids = [aws_security_group.endpoint_sg.id]
 }
 
 resource "aws_vpc_endpoint" "ssmmessages" {
-  vpc_id            = var.vpc_id
+  vpc_id            = aws_vpc.main.id
   service_name      = "com.amazonaws.ap-south-1.ssmmessages"
   vpc_endpoint_type = "Interface"
-  subnet_ids        = var.private_subnets
+  subnet_ids        = aws_subnet.private[*].id
   security_group_ids = [aws_security_group.endpoint_sg.id]
 }
 
 resource "aws_vpc_endpoint" "ec2messages" {
-  vpc_id            = var.vpc_id
+  vpc_id            = aws_vpc.main.id
   service_name      = "com.amazonaws.ap-south-1.ec2messages"
   vpc_endpoint_type = "Interface"
-  subnet_ids        = var.private_subnets
+  subnet_ids        = aws_subnet.private[*].id
   security_group_ids = [aws_security_group.endpoint_sg.id]
 }
 resource "aws_security_group" "endpoint_sg" {
   name   = "endpoint-sg"
-  vpc_id = var.vpc_id
+  vpc_id = aws_vpc.main.id
 
   ingress {
     from_port   = 443
