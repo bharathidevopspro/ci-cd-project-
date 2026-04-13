@@ -14,6 +14,7 @@ resource "aws_launch_template" "lt" {
   name_prefix   = "web-template"
   image_id      = var.ami_id
   instance_type = var.instance_type
+  key_name = "jenkin"
   iam_instance_profile {
   name = var.instance_profile_name
 }
