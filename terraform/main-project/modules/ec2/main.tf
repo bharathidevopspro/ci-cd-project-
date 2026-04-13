@@ -15,7 +15,7 @@ resource "aws_launch_template" "lt" {
   image_id      = var.ami_id
   instance_type = var.instance_type
   iam_instance_profile {
-  name = "ssm"
+  name = aws_iam_instance_profile.ec2_profile
 }
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
    }
