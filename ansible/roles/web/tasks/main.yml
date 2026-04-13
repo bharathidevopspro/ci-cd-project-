@@ -12,7 +12,12 @@
     state: started
     enabled: yes
 
-- name: Ensure web root exists
+- name: Remove existing web root
+  file:
+    path: "{{ web_root }}"
+    state: absent
+
+- name: Recreate web root
   file:
     path: "{{ web_root }}"
     state: directory
@@ -23,21 +28,16 @@
     path: /var/www/html/index.nginx-debian.html
     state: absent
 
-- name: Remove old website files
-  shell: rm -rf {{ web_root }}/*
-  args:
-    warn: false
-
 - name: Clone repo
   git:
-    repo: "{{ repo_url }}"
-    dest: "{{ dest_path }}"
+    repo: "https://github.com/bharathidevopspro/ci-cd-project-.git"
+    dest: "/tmp/app"
     version: main
     force: yes
 
 - name: Copy website files
   copy:
-    src: "{{ dest_path }}/website/"
+    src: "/tmp/app/website/"
     dest: "{{ web_root }}/"
     owner: www-data
     group: www-data
