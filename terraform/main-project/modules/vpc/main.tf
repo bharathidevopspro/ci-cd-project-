@@ -62,6 +62,40 @@ resource "aws_route_table" "public" {
     Name = "public-rt"
   }
 }
+resource "aws_vpc_endpoint" "ssm" {
+  vpc_id            = var.vpc_id
+  service_name      = "com.amazonaws.ap-south-1.ssm"
+  vpc_endpoint_type = "Interface"
+  subnet_ids        = var.private_subnets
+  security_group_ids = [aws_security_group.ec2_sg.id]
+}
+
+resource "aws_vpc_endpoint" "ssmmessages" {
+  vpc_id            = var.vpc_id
+  service_name      = "com.amazonaws.ap-south-1.ssmmessages"
+  vpc_endpoint_type = "Interface"
+  subnet_ids        = var.private_subnets
+  security_group_ids = [aws_security_group.endpoint_sg.id]
+}
+
+resource "aws_vpc_endpoint" "ec2messages" {
+  vpc_id            = var.vpc_id
+  service_name      = "com.amazonaws.ap-south-1.ec2messages"
+  vpc_endpoint_type = "Interface"
+  subnet_ids        = var.private_subnets
+  security_group_ids = [aws_security_group.endpoint_sg.id]
+}
+resource "aws_security_group" "endpoint_sg" {
+  name   = "endpoint-sg"
+  vpc_id = var.vpc_id
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
 
 # Route Table Association (Public)
 resource "aws_route_table_association" "public" {
