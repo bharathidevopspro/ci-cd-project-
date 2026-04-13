@@ -1,13 +1,16 @@
-- name: Update apt cache
-  apt:
-    update_cache: yes
-
 - name: Install nginx and git
   apt:
     name:
       - nginx
       - git
     state: present
+    update_cache: yes
+
+- name: Start and enable nginx
+  service:
+    name: nginx
+    state: started
+    enabled: yes
 
 - name: Ensure web root exists
   file:
@@ -15,7 +18,12 @@
     state: directory
     mode: '0755'
 
-- name: Clean old files
+- name: Remove default nginx page
+  file:
+    path: /var/www/html/index.nginx-debian.html
+    state: absent
+
+- name: Remove old website files
   shell: rm -rf {{ web_root }}/*
   args:
     warn: false
@@ -31,5 +39,8 @@
   copy:
     src: "{{ dest_path }}/website/"
     dest: "{{ web_root }}/"
+    owner: www-data
+    group: www-data
+    mode: '0755'
     remote_src: yes
   notify: restart nginx
