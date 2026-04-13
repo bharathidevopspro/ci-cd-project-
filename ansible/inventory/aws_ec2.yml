@@ -3,11 +3,13 @@ plugin: amazon.aws.aws_ec2
 regions:
   - ap-south-1
 
+filters:
+  instance-state-name: running
+
 keyed_groups:
   - key: tags.Name
 
-hostnames:
-  - public-ip-address
-
 compose:
-  ansible_user: "'ubuntu'"
+  ansible_user: ubuntu
+  ansible_connection: aws_ssm
+  ansible_aws_ssm_region: ap-south-1
