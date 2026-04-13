@@ -17,6 +17,7 @@ module "ec2" {
   ami_id           = var.ami_id
   target_group_arn = module.alb.target_group_arn
   alb_sg_id = module.alb.alb_sg_id
+  instance_profile_name = aws_iam_instance_profile.ec2_profile.name
 }
 
 
