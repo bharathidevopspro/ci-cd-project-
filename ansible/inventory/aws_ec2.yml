@@ -5,11 +5,17 @@ regions:
 
 filters:
   instance-state-name: running
+  tag:Name: ansible-server   # 👈 உன் EC2 tag
+
+hostnames:
+  - private-ip-address
 
 keyed_groups:
   - key: tags.Name
+    prefix: tag
 
 compose:
+  ansible_host: private_ip_address
   ansible_user: ubuntu
-  ansible_connection: aws_ssm
-  ansible_aws_ssm_region: ap-south-1
+
+strict: False
